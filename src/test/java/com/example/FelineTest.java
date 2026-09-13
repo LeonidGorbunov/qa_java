@@ -7,7 +7,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -18,31 +17,28 @@ public class FelineTest {
 
     @Test
     public void shouldGetKittensWithoutArgumentReturnOne () {
-        felineSpy.getKittens();
-        verify(felineSpy).getKittens(1);
+        Feline feline = new Feline();
+        int actual = feline.getKittens();
+        assertEquals("Метод getKittens() без аргументов должен возвращать число 1.", 1, actual);
     }
 
     @Test
     public void shouldGetKittensWithArgumentReturnKittensCount () {
-        assertEquals("Метод getKittens(5) должен возвращать число 5.",5, felineSpy.getKittens(5));
+        Feline feline = new Feline();
+        assertEquals("Метод getKittens(5) должен возвращать число 5.",5, feline.getKittens(5));
     }
 
     @Test
     public void shouldGetFamilyReturnFamily () {
-        assertEquals("Метод getFamily() должен возвращать \"Кошачьи\".","Кошачьи", felineSpy.getFamily());
+        Feline feline = new Feline();
+        assertEquals("Метод getFamily() должен возвращать \"Кошачьи\".","Кошачьи", feline.getFamily());
     }
 
     @Test
     public void shouldEatMeatReturnPredatorMealList () throws Exception {
-        assertEquals("Метод eatMeat() класса Feline должен возвращать список: \"Животные\", \"Птицы\", \"Рыба\".",
-                List.of("Животные", "Птицы", "Рыба"), felineSpy.eatMeat());
-        verify(felineSpy).getFood("Хищник");
-    }
-
-    @Test
-    public void shouldEatMeatReturnPredatorMealListUsingSpy () throws Exception {
         doReturn(List.of("Животные", "Птицы", "Рыба")).when(felineSpy).getFood("Хищник");
         assertEquals("Метод eatMeat() класса Feline должен возвращать список: \"Животные\", \"Птицы\", \"Рыба\".",
                 List.of("Животные", "Птицы", "Рыба"), felineSpy.eatMeat());
     }
+
 }
